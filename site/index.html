@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二年级奥数·数学森林闯关</title>
+<style>
+:root{
+  --bg:#f5f8fc; --card:#ffffff; --ink:#20304a; --muted:#6c7f99; --line:#e3eaf3;
+  --orange:#ff7a59; --blue:#3b82f6; --green:#2bb673; --yellow:#ffc53d; --purple:#8b6cf0;
+  --shadow:0 3px 14px rgba(32,48,74,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+  font-size:15px;line-height:1.7}
+header{background:linear-gradient(120deg,#fff7f2,#eef5ff);border-bottom:1px solid var(--line);
+  padding:18px 22px;position:sticky;top:0;z-index:20}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.5px}
+.hsub{font-size:12px;color:var(--muted);margin-top:2px}
+.stats{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 13px;text-align:center;min-width:78px}
+.stat b{display:block;font-size:18px;line-height:1.2;color:var(--orange)}
+.stat span{font-size:11px;color:var(--muted)}
+.tools{display:flex;gap:8px;margin-left:auto}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);padding:6px 13px;transition:.15s}
+button:hover{border-color:var(--blue);color:var(--blue)}
+button.primary{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+button.primary:hover{filter:brightness(1.05);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1180px;margin:20px auto;padding:0 22px;display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
+@media(max-width:860px){main{grid-template-columns:1fr}.tools{margin-left:0}.stats{margin-left:0}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.side{padding:14px;position:sticky;top:100px}
+.side h2{font-size:13px;color:var(--muted);margin:14px 0 8px;font-weight:600;letter-spacing:1px}
+.side h2:first-child{margin-top:0}
+.lesson-btn{display:block;width:100%;text-align:left;border:1px solid transparent;background:transparent;
+  padding:7px 10px;border-radius:10px;margin-bottom:2px;font-size:13.5px}
+.lesson-btn:hover{background:#f2f7ff;border-color:#dce9ff;color:var(--ink)}
+.lesson-btn.active{background:#eaf2ff;border-color:#cfe0ff;color:#1d4ed8;font-weight:700}
+.lesson-btn .tick{float:right;color:var(--green);font-weight:800}
+.bar{height:9px;border-radius:9px;background:#eaf0f8;overflow:hidden;margin:6px 0 10px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));transition:.3s}
+.content{padding:20px}
+.crumb{font-size:12px;color:var(--muted);margin-bottom:4px}
+.content h2{font-size:24px;margin:2px 0 6px}
+.goal{background:#fff8f2;border-left:4px solid var(--orange);padding:9px 13px;border-radius:8px;
+  font-size:14px;margin:12px 0 16px}
+.slogan{display:inline-block;background:#fff5d6;border:1px dashed #f0c14b;color:#8a5a00;
+  padding:5px 14px;border-radius:20px;font-weight:800;margin-bottom:14px}
+h3{font-size:16px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--blue)}
+.stage{position:relative;background:linear-gradient(180deg,#eaf6ff,#f9ffef);
+  border:1px solid #dbeaf7;border-radius:16px;overflow:hidden}
+.stage svg{display:block;width:100%;height:auto}
+.bubble{position:absolute;left:14%;top:9%;width:72%;min-height:66px;background:#fff;
+  border:2px solid #ffd7c7;border-radius:16px;padding:10px 14px;font-size:15px;font-weight:600;
+  box-shadow:0 4px 12px rgba(255,122,89,.14);display:flex;align-items:center}
+.bubble:after{content:"";position:absolute;left:42px;bottom:-11px;border:6px solid transparent;
+  border-top-color:#fff}
+.board{position:absolute;right:5%;bottom:34%;background:#fffdf3;border:2px solid #f2dfa5;
+  border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:#8a6b00;max-width:40%;
+  box-shadow:0 3px 8px rgba(0,0,0,.05)}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 14px;background:#fff;
+  border-top:1px solid var(--line)}
+.stepinfo{font-size:12px;color:var(--muted);margin-left:auto}
+.video-box{margin-top:12px;background:#f8fbff;border:1px dashed #cddcf0;border-radius:12px;padding:12px}
+.video-box video{width:100%;max-height:330px;border-radius:10px;background:#000}
+.vfallback{font-size:13px;color:var(--muted);display:none}
+.story{font-size:14.5px;background:#f7fbff;border-radius:10px;padding:12px 15px}
+.method li{margin-bottom:4px}
+details{border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin-bottom:8px;background:#fcfdff}
+summary{cursor:pointer;font-weight:700;font-size:14px}
+details .body{padding:8px 2px 2px;font-size:14px;color:#40506a}
+details .body em{font-style:normal;color:var(--green);font-weight:800}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.q .qt{font-weight:700;margin-bottom:8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.opt{border:1px solid var(--line);border-radius:9px;padding:7px 10px;font-size:14px;text-align:left;background:#fbfdff}
+.opt:hover{border-color:var(--blue)}
+.opt.sel{background:#e8f1ff;border-color:var(--blue);font-weight:700}
+.opt.right{background:#e6f8ee;border-color:var(--green);color:#16794a;font-weight:700}
+.opt.wrong{background:#ffeded;border-color:#e5484d;color:#b42318}
+.res{font-size:13.5px;margin-top:9px;padding:8px 11px;border-radius:8px;display:none}
+.res.ok{background:#e9f9f0;color:#16794a;display:block}
+.res.no{background:#fff0f0;color:#b42318;display:block}
+.submitrow{display:flex;gap:10px;align-items:center;margin:12px 0}
+.score{font-weight:800;color:var(--orange);font-size:16px}
+.checkin{background:linear-gradient(120deg,#fff8ec,#f0f7ff);border:1px solid #ffe2bd;
+  border-radius:14px;padding:14px 16px;margin-top:18px}
+.stars{font-size:26px;letter-spacing:6px;cursor:pointer;user-select:none;color:#d8dfe9}
+.stars .on{color:var(--yellow)}
+textarea{width:100%;min-height:76px;border:1px solid var(--line);border-radius:10px;padding:9px 11px;
+  font:inherit;font-size:14px;resize:vertical;background:#fff}
+.saved{font-size:12px;color:var(--green);margin-left:8px}
+.wronglist{font-size:13.5px}
+.wrongitem{border-bottom:1px dashed var(--line);padding:7px 0}
+.wrongitem.done{color:var(--muted);text-decoration:line-through}
+.tag{display:inline-block;font-size:11px;background:#eef4ff;color:#3b5fa8;border-radius:6px;padding:1px 7px;margin-right:6px}
+.notice{font-size:12.5px;color:var(--muted);margin-top:8px}
+footer{text-align:center;font-size:12px;color:var(--muted);padding:26px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <h1>🦊 二年级奥数 · 数学森林闯关</h1>
+      <div class="hsub">16 讲 · 每周 2 次 · 每次 20 分钟 ｜ 动画讲解 + 例题 + 练习 + 打卡 + 周反馈</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="sDone">0</b><span>已达标讲次</span></div>
+      <div class="stat"><b id="sPct">0%</b><span>总进度</span></div>
+      <div class="stat"><b id="sPoints">0</b><span>积分</span></div>
+      <div class="stat"><b id="sWrong">0</b><span>待订正错题</span></div>
+    </div>
+    <div class="tools">
+      <button onclick="exportState()">导出进度</button>
+      <button onclick="document.getElementById('importFile').click()">导入进度</button>
+      <button onclick="showReport()">家长周报</button>
+      <input id="importFile" type="file" accept="application/json" hidden onchange="importState(this)">
+    </div>
+  </div>
+</header>
+
+<main>
+  <aside class="panel side">
+    <h2>总进度</h2>
+    <div class="bar"><i id="barFill" style="width:0%"></i></div>
+    <div id="navList"></div>
+    <h2>单元徽章</h2>
+    <div id="badges" style="font-size:12.5px;color:var(--muted);line-height:2"></div>
+  </aside>
+
+  <section class="panel content" id="detail"></section>
+</main>
+
+<div id="reportModal" style="display:none;position:fixed;inset:0;background:rgba(20,35,60,.45);z-index:40;padding:24px;overflow:auto">
+  <div class="panel" style="max-width:720px;margin:30px auto;padding:20px">
+    <h2 style="font-size:19px;margin:0 0 12px">家长周报（可复制）</h2>
+    <textarea id="reportText" style="min-height:330px"></textarea>
+    <div style="margin-top:12px;display:flex;gap:8px">
+      <button class="primary" onclick="copyReport()">复制全文</button>
+      <button onclick="document.getElementById('reportModal').style.display='none'">关闭</button>
+    </div>
+  </div>
+</div>
+
+<footer>数据保存在本机浏览器，换设备请先导出进度。题目与答案用于正式教学前请人工复核。</footer>
+
+<script id="curriculum-data" type="application/json">{"settings": {"title": "二年级奥数·数学森林闯关", "audience": "小学二年级（7-8 岁），已掌握 100 以内加减法与表内乘除法", "weeks": 16, "sessions_per_week": 2, "minutes_per_session": 20, "hero": "小狸阿算", "partner": "方块小七", "place": "数学森林"}, "rules": {"pass": "5 道练习做对 4 道及以上，且能用自己的话说出本讲方法 → 达标", "review": "做对 3 道 → 订正错题，隔一天重做错题 → 达标", "redo": "做对 2 道及以下 → 重看动画讲解与例题，本讲顺延一周，不进入新讲", "points": ["看完卡通讲解 +2 分", "看懂 3 道例题 +2 分", "练习每做对 1 题 +2 分", "课后自评三星 +3 分", "家长填写一次周反馈 +5 分"], "badges": ["计算小能手：完成第 1-4 讲且全部达标", "火眼金睛：完成第 5-8 讲且全部达标", "解题侦探：完成第 9-12 讲且全部达标", "坚持之星：完成第 13-16 讲且全部达标"], "weekly": "每周固定 2 次，每次 20 分钟：第 1 次看讲解 + 例题，第 2 次做练习 + 打卡 + 家长反馈"}, "lessons": [{"id": 1, "week": "第 1 周", "unit": "第一单元 计算巧算", "title": "凑十凑整：加法变快", "goal": "会把一个数拆开，先把另一个数凑成整十，再算剩下的", "slogan": "看个位，凑成十，剩下的再加上", "story": "数学森林的果子车一次只能装 10 个果子。小狸阿算要把 8 个红果和 7 个黄果搬上车，一个个搬太慢了。方块小七说：先装满一车，剩下的第二车再搬。", "method": ["看第一个数还差几就到 10（或整十）。", "把第二个数拆成「补的数 + 剩下的数」。", "先凑整，再加剩下的；连加时先找能凑整的一对。"], "examples": [{"q": "9 + 6 = ?", "steps": ["把 6 拆成 1 和 5，9 差 1 就到 10", "9 + 1 = 10，10 + 5 = 15"], "answer": "15"}, {"q": "28 + 15 + 2 = ?", "steps": ["先找能凑整的一对：28 和 2", "28 + 2 = 30", "30 + 15 = 45"], "answer": "45"}, {"q": "1+2+3+4+5+6+7+8+9 = ?", "steps": ["首尾配对：1+9、2+8、3+7、4+6，各得 10", "4 个 10 是 40，再加中间的 5"], "answer": "45"}], "exercises": [{"q": "8 + 7 = ?", "options": ["14", "15", "16", "17"], "answer": 1, "why": "把 7 分成 2 和 5：8+2=10，10+5=15"}, {"q": "36 + 19 + 4 = ?", "options": ["49", "58", "60", "59"], "answer": 3, "why": "36+4=40，40+19=59"}, {"q": "25 + 17 + 25 = ?", "options": ["67", "57", "65", "75"], "answer": 0, "why": "25+25=50，50+17=67"}, {"q": "9 + 8 + 7 + 2 = ?", "options": ["24", "25", "26", "27"], "answer": 2, "why": "先凑 8+2=10，10+9+7=26"}, {"q": "47 + 13 = ?", "options": ["50", "59", "60", "61"], "answer": 2, "why": "47+3=50，50+10=60"}], "mistake": "拆数时把第二个数拆错，例如算 9+6 时写成 9+1+6。拆开后两部分加起来必须还是原来的数。", "parent": ["这题里，你想先凑成哪个整十数？", "拆开的两个数，加起来还是原来那个数吗？", "如果不凑整，直接算会不会一样？"], "anim": ["阿算：8 个红果加 7 个黄果，一个一个数太慢啦！", "小七：果子车装满 10 个就出发。8 还差 2 个装满。", "把 7 拆成 2 和 5：8 + 2 = 10，车上装满啦。", "剩下 5 个：10 + 5 = 15。", "口诀：看个位，凑成十，剩下的再加上。"], "scenes": [{"t": "0-2s", "pic": "小狐狸推着两筐彩色果子走进森林，方块机器人在旁边挥手", "line": "一车只装 10 个，怎么搬最快？"}, {"t": "2-4s", "pic": "果子一个个跳进木车，凑满 10 个后车灯亮起", "line": "先装满一车！"}, {"t": "4-5s", "pic": "剩下的果子跳上第二辆车，两个角色击掌", "line": "剩下的再加，就算完啦。"}], "standard": "能说出「拆谁、补几、剩几」，5 题做对 4 题。"}, {"id": 2, "week": "第 2 周", "unit": "第一单元 计算巧算", "title": "减法巧算：带着符号搬家", "goal": "会先减能减整的数、会把接近整十的数先当整十算再补回", "slogan": "多减了要还，少减了要补", "story": "小七记账时把 19 写成 20，多扣了 1 颗星星。阿算提醒它：多减的要还回来。两个小伙伴开始给账本「找补」。", "method": ["减去接近整十的数：先减整十，再把多减的加回来。", "连减时，先看哪个减数与被减数尾数相同，先减它。", "减加混合时，数字可以带着前面的符号一起搬家。"], "examples": [{"q": "43 - 18 = ?", "steps": ["18 接近 20，先算 43 - 20 = 23", "多减了 2，要还回来：23 + 2 = 25"], "answer": "25"}, {"q": "56 - 19 - 6 = ?", "steps": ["56 和 6 尾数相同，先减 6：56 - 6 = 50", "50 - 19 = 31"], "answer": "31"}, {"q": "72 - 28 + 8 = ?", "steps": ["把 +8 搬到前面：72 + 8 = 80", "80 - 28 = 52"], "answer": "52"}], "exercises": [{"q": "52 - 19 = ?", "options": ["31", "32", "33", "34"], "answer": 1, "why": "52-20+1=33，多减的 1 要还回来"}, {"q": "81 - 29 - 1 = ?", "options": ["51", "50", "52", "49"], "answer": 0, "why": "先减 1：81-1=80，80-29=51"}, {"q": "45 - 17 + 5 = ?", "options": ["23", "33", "32", "43"], "answer": 1, "why": "45+5=50，50-17=33"}, {"q": "100 - 38 = ?", "options": ["62", "72", "60", "68"], "answer": 0, "why": "100-40=60，多减 2，60+2=62"}, {"q": "64 - 27 - 14 = ?", "options": ["23", "33", "24", "27"], "answer": 0, "why": "64-14=50，50-27=23"}], "mistake": "把 52-19 算成 52-20-1。减 20 比减 19 多减了 1，应该加回 1，不是再减 1。", "parent": ["你刚才多减了几个？该加回来还是再减？", "哪两个数先算最省事？", "能用加法验算一遍吗？"], "anim": ["小七：43 - 18，我把 18 当 20 减掉了！", "阿算：减 20 比减 18 多减了 2，账上少了 2 颗星。", "43 - 20 = 23，再把 2 颗星还回来：23 + 2 = 25。", "口诀：多减了要还，少减了要补。"], "scenes": [{"t": "0-2s", "pic": "方块机器人举着星星账本，表情惊讶", "line": "哎呀，多减啦！"}, {"t": "2-4s", "pic": "两颗星星从账本外飞回账本", "line": "多减的要还回来。"}, {"t": "4-5s", "pic": "账本盖上正确印章，小狐狸竖大拇指", "line": "这回对啦。"}], "standard": "能说清「多减了几个、为什么加回」，5 题做对 4 题。"}, {"id": 3, "week": "第 3 周", "unit": "第一单元 计算巧算", "title": "配对求和：一列数加起来", "goal": "会用首尾配对的办法算一串有规律的数相加", "slogan": "头尾拉手，一对一对数", "story": "森林台阶上写着 1 到 10 的数字，阿算要一级一级把数字加起来。小七说：不用爬十次，让头尾的数字拉手就行。", "method": ["把最小的和最大的配一对，第二小和第二大配一对。", "每一对的和都相同，数一数有几对。", "个数是单数时，中间那个数单独加。"], "examples": [{"q": "1+2+3+4+5+6+7+8+9+10 = ?", "steps": ["1+10=11，2+9=11，3+8=11，4+7=11，5+6=11", "一共 5 对，5 个 11 是 55"], "answer": "55"}, {"q": "2+4+6+8+10 = ?", "steps": ["2+10=12，4+8=12，中间剩 6", "12+12+6=30"], "answer": "30"}, {"q": "1+3+5+7+9 = ?", "steps": ["1+9=10，3+7=10，中间剩 5", "10+10+5=25"], "answer": "25"}], "exercises": [{"q": "1+2+3+…+10 = ?", "options": ["45", "50", "55", "60"], "answer": 2, "why": "5 对，每对 1+10=11，11×5=55"}, {"q": "1+3+5+7+9 = ?", "options": ["20", "25", "30", "24"], "answer": 1, "why": "(1+9)+(3+7)+5=25"}, {"q": "2+4+6+8 = ?", "options": ["18", "20", "22", "24"], "answer": 1, "why": "(2+8)+(4+6)=20"}, {"q": "3+4+5+6+7 = ?", "options": ["22", "25", "24", "30"], "answer": 1, "why": "(3+7)+(4+6)+5=25"}, {"q": "1+2+3+4+5 = ?", "options": ["14", "15", "16", "10"], "answer": 1, "why": "(1+5)+(2+4)+3=15"}], "mistake": "配对后忘记中间单独剩下的数，或把「有几对」数错。配完对要回头点一遍，别漏数。", "parent": ["这一串数里，头尾一对是多少？", "一共配了几对？有没有剩下的？", "如果从左往右硬加，答案会一样吗？"], "anim": ["阿算：1 加到 10，要加九次，好累呀。", "小七：让 1 和 10 拉手：1+10=11。", "2 和 9、3 和 8……每一对都是 11。", "一共 5 对：11×5=55。", "个数是单数时，中间那个要单独加哦。"], "scenes": [{"t": "0-2s", "pic": "森林石阶上排着彩色数字积木，小狐狸在台阶下张望", "line": "一级一级加，太慢啦。"}, {"t": "2-4s", "pic": "首尾两块数字积木飞到一起手拉手，亮起光", "line": "头尾拉手，每对一样多！"}, {"t": "4-5s", "pic": "五对积木排成一行，机器人点头", "line": "数数有几对就行。"}], "standard": "能自己画出配对连线，5 题做对 4 题。"}, {"id": 4, "week": "第 4 周", "unit": "第一单元 计算巧算", "title": "巧填算式：方框里藏着几", "goal": "会用倒过来算的办法，填出加减算式里缺的数", "slogan": "求加数用减，求被减数用加", "story": "森林信箱上的算式被雨水打湿，几个数字看不清了。阿算当起小侦探，用「倒着走」的办法把数字找回来。", "method": ["□ 在加法里：用和减去另一个加数。", "□ 是被减数：用差加上减数；□ 是减数：用被减数减去差。", "两位数里缺一位时，先看个位，再看十位，最后代回原式验算。"], "examples": [{"q": "□ + 7 = 15，□ = ?", "steps": ["求加数，用和减另一个加数", "15 - 7 = 8，代回去 8+7=15 ✓"], "answer": "8"}, {"q": "2□ + 35 = 61，□ = ?", "steps": ["先看个位：□ + 5 的个位是 1，说明进了位，□ = 6", "代回验算：26 + 35 = 61 ✓"], "answer": "6"}, {"q": "□□ - 18 = 24，□□ = ?", "steps": ["求被减数，用差加减数", "24 + 18 = 42，验算 42 - 18 = 24 ✓"], "answer": "42"}], "exercises": [{"q": "□ - 9 = 7，□ = ?", "options": ["15", "16", "17", "6"], "answer": 1, "why": "7+9=16"}, {"q": "4□ + 27 = 72，□ = ?", "options": ["3", "5", "6", "7"], "answer": 1, "why": "45+27=72，所以填 5"}, {"q": "8 + □ = 14，□ = ?", "options": ["5", "6", "7", "8"], "answer": 1, "why": "14-8=6"}, {"q": "63 - □ = 28，□ = ?", "options": ["35", "45", "36", "25"], "answer": 0, "why": "63-28=35"}, {"q": "□5 + 18 = 53，□ = ?", "options": ["2", "3", "4", "5"], "answer": 1, "why": "35+18=53，所以填 3"}], "mistake": "填完不验算。两位数缺位时容易漏掉进位，例如 4□+27=72 若只看个位会想成 5，实际 45+27=72 ✓，仍需代回原式确认。", "parent": ["方框里的数是加数、被减数还是减数？", "该用加还是用减倒回去？", "把答案填回原式，等号两边一样吗？"], "anim": ["阿算：信箱上 □ + 7 = 15，方框里是几？", "小七：倒着走！求加数，用和减另一个加数。", "15 - 7 = 8，方框里是 8。", "别忘了代回去：8 + 7 = 15 ✓", "口诀：求加数用减，求被减数用加。"], "scenes": [{"t": "0-2s", "pic": "雨后的木信箱，算式上有一块空白，小狐狸拿放大镜", "line": "数字被雨冲掉啦。"}, {"t": "2-4s", "pic": "机器人倒着走回脚印起点，脚印连成算式", "line": "倒着走回去找！"}, {"t": "4-5s", "pic": "空白格亮出数字，信箱打开", "line": "验算一遍才算数。"}], "standard": "每题都能代回原式验算，5 题做对 4 题。"}, {"id": 5, "week": "第 5 周", "unit": "第二单元 规律与图形", "title": "找规律：数字和图形排队", "goal": "会看相邻两数的差、会找重复的一小组，并用分组判断第几个", "slogan": "先看差，再看组，一组一组重复数", "story": "森林小路用彩色石板铺成，红、黄、蓝一块接一块。阿算想知道第 9 块是什么颜色，小七让它别数到第 9，先找出「一组有几块」。", "method": ["数字规律：算相邻两个数的差，看差是固定的还是一次比一次多。", "图形规律：圈出重复出现的最小一组。", "求第几个：总数除以每组的个数，看余数是几（余 0 就是一组最后一个）。"], "examples": [{"q": "2, 4, 6, 8, □, 12", "steps": ["相邻两数都差 2", "8 + 2 = 10，代回检查 10+2=12 ✓"], "answer": "10"}, {"q": "1, 2, 4, 7, 11, □", "steps": ["差依次是 1、2、3、4，下一个差是 5", "11 + 5 = 16"], "answer": "16"}, {"q": "红黄蓝红黄蓝…第 10 个是什么颜色？", "steps": ["每 3 个一组：红、黄、蓝", "10 = 3×3 + 1，余 1，是一组的第 1 个"], "answer": "红色"}], "exercises": [{"q": "3, 6, 9, 12, □ = ?", "options": ["15", "14", "16", "18"], "answer": 0, "why": "每次加 3，12+3=15"}, {"q": "1, 4, 7, 10, □ = ?", "options": ["11", "12", "13", "14"], "answer": 2, "why": "每次加 3，10+3=13"}, {"q": "○△○△○△…第 9 个是？", "options": ["○", "△", "□", "说不准"], "answer": 0, "why": "2 个一组，9 是单数，一组第 1 个是 ○"}, {"q": "1, 2, 4, 8, 16, □ = ?", "options": ["24", "30", "32", "20"], "answer": 2, "why": "每次乘 2，16×2=32"}, {"q": "5, 10, 15, 20, □ = ?", "options": ["24", "25", "30", "35"], "answer": 1, "why": "每次加 5，20+5=25"}], "mistake": "看到 1, 2, 4 就急着说「每次加 1」。要先把所有相邻的差都算出来，再下结论。", "parent": ["相邻两个数差多少？差是一样的吗？", "图形里，最小重复的一组是什么？", "第 9 个落在第几组的第几个？"], "anim": ["阿算：红黄蓝、红黄蓝……第 10 块是什么颜色？", "小七：先圈出一组：红、黄、蓝，一组 3 块。", "10 块可以分成 3 组还多 1 块。", "多出来的第 1 块，就是一组的第 1 个：红色。", "口诀：先看差，再看组，一组一组重复数。"], "scenes": [{"t": "0-2s", "pic": "彩色石板小路蜿蜒进森林，小狐狸踮脚往前看", "line": "第 10 块是什么颜色？"}, {"t": "2-4s", "pic": "三块石板被光圈圈成一组，后面依次复制", "line": "找到重复的一组啦。"}, {"t": "4-5s", "pic": "队伍往前走，最后一块亮起红色", "line": "数余数就知道。"}], "standard": "能圈出重复组并说明余数，5 题做对 4 题。"}, {"id": 6, "week": "第 6 周", "unit": "第二单元 规律与图形", "title": "有序数图形：不重也不漏", "goal": "会按起点或按大小分类数线段、正方形、长方形", "slogan": "定好顺序，从左往右一个个数", "story": "小七数树枝上的线段，数着数着就乱了。阿算给它一支彩笔：从最左边的点出发，一条一条画，画完再换下一个起点。", "method": ["数线段：固定左端点，依次连右边的点；再从第二个点出发，依此类推。", "数方格：先数单个小的，再数两个拼的、三个拼的……按大小分类。", "每数完一类做个记号，防止重复。"], "examples": [{"q": "一条直线上有 A、B、C 三个点，共有几条线段？", "steps": ["从 A 出发：AB、AC（2 条）", "从 B 出发：BC（1 条），合计 2+1=3 条"], "answer": "3 条"}, {"q": "一条直线上有 4 个点，共有几条线段？", "steps": ["从各点出发依次是 3、2、1 条", "3+2+1=6 条"], "answer": "6 条"}, {"q": "2×2 方格中共有几个正方形？", "steps": ["4 个小正方形", "再加 1 个由 4 格拼成的大正方形"], "answer": "5 个"}], "exercises": [{"q": "一条直线上有 5 个点，共有几条线段？", "options": ["8", "9", "10", "11"], "answer": 2, "why": "4+3+2+1=10"}, {"q": "一条直线上有 3 个点，共有几条线段？", "options": ["2", "3", "4", "6"], "answer": 1, "why": "2+1=3"}, {"q": "2×2 方格中共有几个正方形？", "options": ["4", "5", "6", "8"], "answer": 1, "why": "4 个小 + 1 个大 = 5"}, {"q": "一行 3 个小方格，一共能数出几个长方形？", "options": ["3", "5", "6", "7"], "answer": 2, "why": "单个 3 个 + 两个拼 2 个 + 三个拼 1 个 = 6"}, {"q": "一条直线上有 4 个点，共有几条线段？", "options": ["4", "5", "6", "7"], "answer": 2, "why": "3+2+1=6"}], "mistake": "想到哪数到哪，容易重复或漏掉「跨过好几个点」的长线段。必须固定起点，按顺序走。", "parent": ["你按什么顺序数的？", "跨两个点的长线段数到了吗？", "换一种分类再数一遍，答案一样吗？"], "anim": ["阿算：4 个点能连出几条线段？别乱数。", "小七：从最左边的点出发，能连 3 条。", "第二个点出发 2 条，第三个点出发 1 条。", "3+2+1=6 条。数方格也一样，按大小分类。", "口诀：定好顺序，从左往右一个个数。"], "scenes": [{"t": "0-2s", "pic": "树枝上排着四个彩色圆点，小狐狸拿彩笔比划", "line": "别乱数，先定顺序。"}, {"t": "2-4s", "pic": "从第一个点依次飞出三条彩线，再换起点", "line": "一个起点，一个起点来。"}, {"t": "4-5s", "pic": "所有线段亮起，机器人举计数牌", "line": "不重也不漏。"}], "standard": "能写出「固定起点」的加法算式，5 题做对 4 题。"}, {"id": 7, "week": "第 7 周", "unit": "第二单元 规律与图形", "title": "一笔画：小七走迷宫不抬笔", "goal": "会数每个点连着几条线，用「单数点」判断能不能一笔画", "slogan": "单数点 0 个或 2 个，才能一笔画", "story": "森林地上画着一条亮线，规则是笔不离纸、线不重复。小七试了三次都失败，阿算说：先别急着画，数数每个路口连着几条线。", "method": ["把交点当成路口，数一数每个路口连出几条线。", "连出单数条线的路口叫「单数点」。", "单数点有 0 个或 2 个：能一笔画；有 4 个及以上：不能。"], "examples": [{"q": "三角形能一笔画吗？", "steps": ["每个顶点都连着 2 条线，是双数点", "单数点 0 个，可以一笔画"], "answer": "能"}, {"q": "正方形加一条对角线，能一笔画吗？", "steps": ["对角线两端的点各连 3 条线，是单数点", "另外两个点各连 2 条线，单数点正好 2 个"], "answer": "能，从其中一个单数点出发"}, {"q": "「田」字能一笔画吗？", "steps": ["四条边中点各连 3 条线", "单数点有 4 个"], "answer": "不能"}], "exercises": [{"q": "三角形的每个顶点连着几条线？", "options": ["1", "2", "3", "4"], "answer": 1, "why": "每个顶点连 2 条"}, {"q": "正方形加一条对角线，有几个点连着 3 条线？", "options": ["0", "1", "2", "4"], "answer": 2, "why": "对角线两端的 2 个点"}, {"q": "一个图形有 4 个点连着单数条线，能一笔画吗？", "options": ["能", "不能", "看颜色", "都要试"], "answer": 1, "why": "单数点超过 2 个就不能"}, {"q": "一个圆能一笔画吗？", "options": ["能", "不能", "要两支笔", "不确定"], "answer": 0, "why": "没有单数点，从任意点出发回到原点"}, {"q": "正方形（不加对角线）每个顶点连着几条线？", "options": ["1", "2", "3", "4"], "answer": 1, "why": "每个顶点连 2 条"}], "mistake": "只凭「看起来简单」就下结论。一定要把每个路口的线数写在旁边，数完再判断。", "parent": ["每个路口连着几条线？在旁边写下来。", "单数点一共几个？", "如果从单数点出发，能走回哪里？"], "anim": ["小七：这图我画了三次，总要抬笔！", "阿算：先数路口。每个点连出几条线？", "连出单数条线的点，叫单数点。", "单数点只有 0 个或 2 个时，才能一笔画。", "超过 2 个，就别白费劲啦。"], "scenes": [{"t": "0-2s", "pic": "地上一条发光迷宫线，机器人拿着笔犹豫", "line": "笔不能抬起来哦。"}, {"t": "2-4s", "pic": "路口亮起小牌子，标出连着的线数", "line": "先数每个路口。"}, {"t": "4-5s", "pic": "小狐狸一笔画完，线全部亮起", "line": "单数点找对就成功！"}], "standard": "能在图上标出每个点的线数并给出判断，5 题做对 4 题。"}, {"id": 8, "week": "第 8 周", "unit": "第二单元 规律与图形", "title": "小棒摆摆看：共用一条边", "goal": "会发现两个图形共用一条边时能省小棒，会按规律接着数", "slogan": "第一个全用，后面只添少的那几根", "story": "阿算用小棒搭小房子，第一个正方形用了 4 根，第二个只添了 3 根。小七眨眨眼：原来挨在一起的房子可以共用一堵墙。", "method": ["先摆第一个图形，数清用几根。", "每多摆一个挨着的图形，共用的那条边不用再添。", "列成连加算式：第一个的根数 + 后面每个要添的根数。"], "examples": [{"q": "摆 2 个连在一起的正方形要几根小棒？", "steps": ["第一个用 4 根", "第二个共用 1 条边，只添 3 根：4+3=7"], "answer": "7 根"}, {"q": "摆 3 个连成一排的正方形要几根？", "steps": ["4 + 3 + 3 = 10"], "answer": "10 根"}, {"q": "摆 2 个共用一条边的三角形要几根？", "steps": ["第一个用 3 根，第二个共用 1 边只添 2 根", "3+2=5 根"], "answer": "5 根"}], "exercises": [{"q": "摆 2 个连在一起的正方形要几根？", "options": ["6", "7", "8", "9"], "answer": 1, "why": "4+3=7"}, {"q": "摆 3 个连成一排的正方形要几根？", "options": ["10", "9", "11", "12"], "answer": 0, "why": "4+3+3=10"}, {"q": "摆 2 个共用一条边的三角形要几根？", "options": ["4", "6", "5", "7"], "answer": 2, "why": "3+2=5"}, {"q": "摆 4 个连成一排的正方形要几根？", "options": ["12", "14", "13", "16"], "answer": 2, "why": "4+3+3+3=13"}, {"q": "摆 1 个正方形和 1 个三角形，完全分开，共几根？", "options": ["7", "6", "8", "9"], "answer": 0, "why": "4+3=7，没有共用边"}], "mistake": "把分开摆和连着摆混在一起算。先看清楚有没有共用边，再决定第二个添几根。", "parent": ["这两个图形共用了哪条边？", "第二个图形为什么要少添一根？", "摆 5 个的话，算式怎么写？"], "anim": ["阿算：一个正方形要 4 根小棒。", "小七：第二个挨着摆，有一条边可以共用。", "所以只添 3 根：4 + 3 = 7 根。", "再摆一个，又只添 3 根：7 + 3 = 10 根。", "口诀：第一个全用，后面只添少的那几根。"], "scenes": [{"t": "0-2s", "pic": "小狐狸用彩色小棒搭出一个正方形", "line": "第一个要用 4 根。"}, {"t": "2-4s", "pic": "旁边添上三根，两个正方形共用中间一根", "line": "挨着摆，省一根！"}, {"t": "4-5s", "pic": "一排小房子亮起灯，机器人拍手", "line": "越摆越省。"}], "standard": "能写出连加算式并说清共用边，5 题做对 4 题。"}, {"id": 9, "week": "第 9 周", "unit": "第三单元 应用题", "title": "间隔问题：种树、锯木头、爬楼", "goal": "会分清「段数」和「点数」，知道什么时候加 1、什么时候减 1", "slogan": "两端都种加 1，锯成几段减 1", "story": "森林小路要种树，阿算量出 12 米，每 3 米种一棵。它刚想说 4 棵，小七指着路的两头：两头也要种呀。", "method": ["先算出有几段：总长 ÷ 每段长。", "两端都种：棵数 = 段数 + 1；只种一端：棵数 = 段数；两端都不种：棵数 = 段数 - 1。", "锯木头、爬楼、敲钟看的是「间隔」：次数 = 段数 - 1。"], "examples": [{"q": "10 米小路每 2 米种 1 棵，两端都种，共几棵？", "steps": ["10 ÷ 2 = 5 段", "两端都种：5 + 1 = 6 棵"], "answer": "6 棵"}, {"q": "把木头锯成 3 段，每锯 1 次 2 分钟，共几分钟？", "steps": ["3 段只要锯 2 次", "2 × 2 = 4 分钟"], "answer": "4 分钟"}, {"q": "从 1 楼走到 3 楼，每层 12 级台阶，共走几级？", "steps": ["1 楼到 3 楼只走了 2 层楼梯", "12 × 2 = 24 级"], "answer": "24 级"}], "exercises": [{"q": "12 米小路每 3 米种 1 棵，两端都种，共几棵？", "options": ["5", "4", "6", "7"], "answer": 0, "why": "12÷3=4 段，4+1=5 棵"}, {"q": "把木头锯成 5 段，要锯几次？", "options": ["3", "5", "4", "6"], "answer": 2, "why": "5-1=4 次"}, {"q": "从 1 楼走到 4 楼，要走几层楼梯？", "options": ["2", "3", "4", "5"], "answer": 1, "why": "4-1=3 层"}, {"q": "6 个小朋友排成一排，中间有几个空？", "options": ["5", "4", "6", "7"], "answer": 0, "why": "6-1=5 个间隔"}, {"q": "钟敲 6 下用 5 秒，敲 3 下用几秒？", "options": ["2 秒", "3 秒", "4 秒", "5 秒"], "answer": 0, "why": "6 下有 5 个间隔，每个 1 秒；3 下有 2 个间隔，用 2 秒"}], "mistake": "把「段数」直接当成「棵数」。看到种树就画一条线，把两端的小树也画出来，数一数。", "parent": ["这题问的是段数还是点数？", "两端有没有东西？", "能画一条线段图给自己看吗？"], "anim": ["阿算：12 米路，每 3 米种一棵，4 棵对吧？", "小七：先算段数：12 ÷ 3 = 4 段。", "可是路的两头都要种，段数要加 1。", "4 + 1 = 5 棵。锯木头正好相反：3 段只锯 2 次。", "口诀：两端都种加 1，锯成几段减 1。"], "scenes": [{"t": "0-2s", "pic": "森林小路两端各站一棵小树苗，中间空着", "line": "两头也要种哦。"}, {"t": "2-4s", "pic": "小路分成几段，树苗一棵棵冒出来", "line": "段数加 1 才是棵数。"}, {"t": "4-5s", "pic": "木头被锯成几段，机器人举着锯子", "line": "锯木头要反过来想。"}], "standard": "能画出线段图并说明加 1 或减 1 的理由，5 题做对 4 题。"}, {"id": 10, "week": "第 10 周", "unit": "第三单元 应用题", "title": "和差问题：画线段图分两堆", "goal": "会用「移多补少」或线段图求大数、小数", "slogan": "和加差，除以 2 得大数", "story": "阿算和小七一共摘了 20 个果子，阿算比小七多 4 个。两人吵着要平分，小七说：先把多出来的 4 个拿走，剩下的正好一人一半。", "method": ["画两条线段，长的比短的多的那一截就是「差」。", "方法一：先从和里去掉差，剩下的平分得小数，再加差得大数。", "方法二：先给小的补上差，和变大后平分得大数。"], "examples": [{"q": "两数和 20，差 4，求两数", "steps": ["20 - 4 = 16，16 平分得小数 8", "8 + 4 = 12 是大数，验算 12+8=20 ✓"], "answer": "大数 12，小数 8"}, {"q": "哥哥弟弟共 18 张卡片，哥哥比弟弟多 2 张，各几张？", "steps": ["18 - 2 = 16，平分得弟弟 8 张", "哥哥 8 + 2 = 10 张"], "answer": "哥哥 10 张，弟弟 8 张"}, {"q": "两筐共 30 个苹果，从甲筐拿 3 个到乙筐后一样多，原来甲比乙多几个？", "steps": ["甲给乙 3 个，甲少 3、乙多 3，差距缩小 6", "原来甲比乙多 6 个"], "answer": "6 个"}], "exercises": [{"q": "两数和 16，差 4，大数是？", "options": ["8", "10", "12", "9"], "answer": 1, "why": "(16+4)÷2=10"}, {"q": "两数和 14，差 2，小数是？", "options": ["6", "7", "8", "5"], "answer": 0, "why": "(14-2)÷2=6"}, {"q": "甲乙共 24，甲比乙多 6，乙是？", "options": ["8", "9", "10", "12"], "answer": 1, "why": "(24-6)÷2=9"}, {"q": "从 A 拿 2 个给 B 后两边一样多，原来 A 比 B 多几个？", "options": ["2", "4", "6", "8"], "answer": 1, "why": "一去一来差距缩小 4，原来多 4 个"}, {"q": "两数和 30，差 10，大数是？", "options": ["15", "18", "20", "25"], "answer": 2, "why": "(30+10)÷2=20"}], "mistake": "「给 2 个后一样多」误答成原来多 2 个。给出去 2 个，一边少 2、一边多 2，差距一共缩小 4。", "parent": ["两条线段哪条长？多出来的一截是几？", "把差去掉以后，剩下的怎么分？", "两个答案加起来等于原来的和吗？"], "anim": ["阿算：一共 20 个，我比小七多 4 个，各是多少？", "小七：先把多出来的 4 个放到一边。", "20 - 4 = 16，剩下的正好平分：16 ÷ 2 = 8。", "小数是 8，大数就是 8 + 4 = 12。", "口诀：和减差，除以 2 得小数；和加差，除以 2 得大数。"], "scenes": [{"t": "0-2s", "pic": "两堆果子一高一矮，小狐狸挠头", "line": "一堆多、一堆少。"}, {"t": "2-4s", "pic": "多出的一截果子被搬到旁边，两堆变齐", "line": "先把多的拿走。"}, {"t": "4-5s", "pic": "齐平的两堆击掌，旁边那截飞回高堆", "line": "平分后再补回去。"}], "standard": "能画出线段图并验算和、差，5 题做对 4 题。"}, {"id": 11, "week": "第 11 周", "unit": "第三单元 应用题", "title": "倍数问题：一份一份画出来", "goal": "会把「几倍」画成几份，会算几倍多几、几倍少几", "slogan": "先找 1 份，再数有几份", "story": "小七有 3 颗星星，阿算的星星是它的 2 倍。小七把 3 颗摆成一排：一份、两份，一眼就数清了。", "method": ["把较小的量当作 1 份，画一格表示。", "几倍就画几格；「多几」在末尾补一小截，「少几」从末尾去掉一小截。", "已知「多出的数」时，先算出它对应几份，再求 1 份。"], "examples": [{"q": "小红有 3 颗糖，小明是她的 2 倍，两人共几颗？", "steps": ["1 份是 3 颗，小明有 2 份：3 × 2 = 6 颗", "一共 3 + 6 = 9 颗"], "answer": "9 颗"}, {"q": "甲是乙的 3 倍，甲比乙多 8，求甲乙", "steps": ["甲比乙多 2 份，这 2 份是 8", "1 份是 4，乙=4，甲=12"], "answer": "乙 4，甲 12"}, {"q": "小猴摘 5 个桃，大猴摘的是小猴的 3 倍少 2 个，大猴几个？", "steps": ["3 份是 5 × 3 = 15 个", "少 2 个：15 - 2 = 13 个"], "answer": "13 个"}], "exercises": [{"q": "4 的 3 倍是？", "options": ["7", "12", "9", "16"], "answer": 1, "why": "4×3=12"}, {"q": "乙有 6 个，甲是乙的 2 倍，甲乙一共几个？", "options": ["12", "16", "18", "20"], "answer": 2, "why": "甲 12 个，6+12=18"}, {"q": "甲是乙的 3 倍，甲比乙多 10，乙是？", "options": ["4", "5", "6", "10"], "answer": 1, "why": "多的 10 是 2 份，1 份是 5"}, {"q": "5 的 2 倍少 1 是？", "options": ["8", "10", "9", "11"], "answer": 2, "why": "5×2=10，10-1=9"}, {"q": "小红 7 张卡片，小明是她的 2 倍，小明几张？", "options": ["14", "12", "16", "21"], "answer": 0, "why": "7×2=14"}], "mistake": "把「甲是乙的 3 倍，甲比乙多 10」当成 10 ÷ 3。多出来的 10 对应的是 2 份，不是 3 份。", "parent": ["这一题里，1 份是哪个数？", "一共画了几格？多出的是几格？", "「几倍多几」的那一小截加在哪儿？"], "anim": ["小七：我有 3 颗星，阿算是我的 2 倍。", "阿算：把 3 颗摆成一格，这就是 1 份。", "2 倍就是两格：3 × 2 = 6 颗。", "两人一共 3 + 6 = 9 颗。", "口诀：先找 1 份，再数有几份。"], "scenes": [{"t": "0-2s", "pic": "三颗星星排成一小格，旁边留着空格", "line": "这就是 1 份。"}, {"t": "2-4s", "pic": "同样的一格复制出来，两格并排", "line": "2 倍就是两格。"}, {"t": "4-5s", "pic": "两格星星一起亮起，小狐狸比出胜利手势", "line": "数格子比硬算清楚。"}], "standard": "能画出份数图，5 题做对 4 题。"}, {"id": 12, "week": "第 12 周", "unit": "第三单元 应用题", "title": "还原问题：倒着走回去", "goal": "会从结果出发，把每一步反过来算，求出原来的数", "slogan": "加变减，减变加，乘变除，顺序倒过来", "story": "阿算把果子放进魔法盒，出来时多了几个。小七只看见结果，阿算说：别慌，把盒子倒着摇一遍，果子就回去了。", "method": ["把题目的步骤按顺序写成箭头图。", "从结果出发，倒着往回走：加减互换、乘除互换。", "算回原数后，按原步骤正向验算一遍。"], "examples": [{"q": "一个数加 6 再减 4 得 12，原数是几？", "steps": ["倒着走：12 先加 4 得 16", "再减 6 得 10，验算 10+6-4=12 ✓"], "answer": "10"}, {"q": "一堆桃吃掉一半又多 1 个，剩 3 个，原来几个？", "steps": ["倒着走：先把多吃的 1 个还回来：3 + 1 = 4", "这 4 个是原来的一半，原来是 4 × 2 = 8 个"], "answer": "8 个"}, {"q": "某数 × 2 + 3 = 13，求某数", "steps": ["13 - 3 = 10", "10 ÷ 2 = 5"], "answer": "5"}], "exercises": [{"q": "一个数加 8 再减 3 得 15，原数是？", "options": ["9", "10", "11", "12"], "answer": 1, "why": "15+3-8=10"}, {"q": "一个数乘 3 再加 2 得 11，原数是？", "options": ["2", "3", "4", "5"], "answer": 1, "why": "(11-2)÷3=3"}, {"q": "一堆桃吃了一半又多 1 个，剩 4 个，原来几个？", "options": ["8", "9", "10", "12"], "answer": 2, "why": "(4+1)×2=10"}, {"q": "一个数减 7 再加 2 得 10，原数是？", "options": ["13", "14", "15", "16"], "answer": 2, "why": "10-2+7=15"}, {"q": "□ + 5 = 20，□ = ?", "options": ["14", "15", "16", "25"], "answer": 1, "why": "20-5=15"}], "mistake": "倒着走时只把运算反过来，却忘记把顺序也倒过来。例如「先加 8 再减 3」，倒回去要「先加 3 再减 8」。", "parent": ["题目里一共走了几步？按顺序说出来。", "倒回去第一步该做什么？", "正向算一遍，能回到结果吗？"], "anim": ["小七：盒子出来是 12，原来放进去几个？", "阿算：先写下步骤：原数 → 加 6 → 减 4 → 12。", "倒着走：12 加 4 得 16，再减 6 得 10。", "正向验算：10 + 6 - 4 = 12 ✓", "口诀：加变减，减变加，顺序也要倒过来。"], "scenes": [{"t": "0-2s", "pic": "彩色魔法盒，果子从右边滚出来", "line": "只看见结果啦。"}, {"t": "2-4s", "pic": "箭头倒转，果子沿原路滚回盒里", "line": "倒着走一遍。"}, {"t": "4-5s", "pic": "盒盖打开，露出原来的果子数", "line": "原数找回来了。"}], "standard": "能画箭头图并正向验算，5 题做对 4 题。"}, {"id": 13, "week": "第 13 周", "unit": "第四单元 逻辑与综合", "title": "简单推理：列表排除法", "goal": "会把条件列成表，用「不是…就只能是…」逐格排除", "slogan": "确定的先填，剩下的再排除", "story": "三只小动物各拿了一种颜色的气球，谁也不肯直说。阿算拿出一张表格：把「不可能」划掉，剩下的自然就露出来了。", "method": ["画一张表：行是对象（人或物），列是可能的答案。", "把直接告诉的条件先填上，同一行同一列其余格子划掉。", "再看哪一行只剩一个空格，把它填上，继续排除。"], "examples": [{"q": "甲乙丙分别拿红、黄、蓝球。甲不拿红，乙不拿红也不拿蓝，各拿什么？", "steps": ["乙既不红也不蓝 → 乙拿黄", "甲不拿红，黄已被乙拿走 → 甲拿蓝，丙拿红"], "answer": "乙黄、甲蓝、丙红"}, {"q": "小刚、小丽、小云分别喜欢猫、狗、兔。小丽喜欢狗，小刚不喜欢猫也不喜欢狗，各喜欢什么？", "steps": ["小丽 = 狗", "小刚不猫不狗 → 小刚 = 兔，小云 = 猫"], "answer": "小丽狗、小刚兔、小云猫"}, {"q": "三人比赛，A 不是第一，B 不是第一也不是第三，名次如何？", "steps": ["B 不是第一也不是第三 → B 第二", "A 不是第一，第二已被 B 占 → A 第三，C 第一"], "answer": "C 第一、B 第二、A 第三"}], "exercises": [{"q": "A 不是第一，B 不是第一也不是第三，B 第几名？", "options": ["第一", "第二", "第三", "不确定"], "answer": 1, "why": "排除后只剩第二"}, {"q": "甲乙丙分别拿红黄蓝球。甲不拿红，乙不拿红也不拿蓝。乙拿什么？", "options": ["红", "黄", "蓝", "不确定"], "answer": 1, "why": "既不红也不蓝，只能黄"}, {"q": "接上题，甲拿什么？", "options": ["红", "黄", "蓝", "不确定"], "answer": 2, "why": "甲不红，黄被乙拿走，只能蓝"}, {"q": "接上题，丙拿什么？", "options": ["红", "黄", "蓝", "不确定"], "answer": 0, "why": "剩下的红色"}, {"q": "小刚、小丽、小云分别喜欢猫狗兔。小丽喜欢狗，小刚不喜欢猫也不喜欢狗。小刚喜欢？", "options": ["猫", "狗", "兔", "不确定"], "answer": 2, "why": "只剩兔"}], "mistake": "只用一个条件就急着猜。要把所有条件都写进表里，同一行同一列只能有一个「是」。", "parent": ["哪个条件是直接告诉你的？", "这一行还剩几个可能？", "填完以后，每个条件都满足吗？"], "anim": ["阿算：三个人三种颜色，谁也不肯说。", "小七：画张表，把不可能的格子划掉。", "乙不红也不蓝，那只能是黄。", "甲不红，黄又被拿走了，只能是蓝。", "剩下的红给丙。确定的先填，剩下的再排除。"], "scenes": [{"t": "0-2s", "pic": "三只小动物各举一个气球，颜色被遮住", "line": "猜猜谁拿哪个？"}, {"t": "2-4s", "pic": "一张表格上的格子被逐个打叉，只剩一格亮起", "line": "不可能的先划掉。"}, {"t": "4-5s", "pic": "气球颜色全部揭晓，机器人打勾", "line": "剩下的就是答案。"}], "standard": "能独立列表并逐格说明排除理由，5 题做对 4 题。"}, {"id": 14, "week": "第 14 周", "unit": "第四单元 逻辑与综合", "title": "有序枚举：搭配不重样", "goal": "会按固定顺序列出所有可能，会用连线或乘法算搭配数", "slogan": "定住第一个，再换第二个", "story": "森林舞会要选上衣和裤子，小七换来换去总漏一套。阿算说：先定住第一件上衣，把裤子一条条配完，再换下一件。", "method": ["摆两位数：先定十位，再把剩下的数字逐个放个位。", "搭配：一件上衣配所有下装，数出一组有几个，再看有几组。", "两两握手、连线段：固定第一个人，依次与后面的人连，不往回连。"], "examples": [{"q": "用 1、2、3 三张数字卡摆两位数（不重复），能摆几个？", "steps": ["十位是 1：12、13（2 个）", "十位是 2：21、23；十位是 3：31、32，共 6 个"], "answer": "6 个"}, {"q": "2 件上衣、3 条裤子，有几种搭配？", "steps": ["每件上衣都能配 3 条裤子", "2 × 3 = 6 种"], "answer": "6 种"}, {"q": "A、B、C、D 四点中任选两点连线段，共几条？", "steps": ["从 A 出发 3 条，B 出发 2 条，C 出发 1 条", "3+2+1=6 条"], "answer": "6 条"}], "exercises": [{"q": "用 1、2 两张数字卡摆两位数（不重复），能摆几个？", "options": ["1", "2", "3", "4"], "answer": 1, "why": "12 和 21，共 2 个"}, {"q": "3 件上衣、2 条裤子，有几种搭配？", "options": ["5", "6", "8", "9"], "answer": 1, "why": "3×2=6"}, {"q": "用 2、4、6 摆两位数（不重复），能摆几个？", "options": ["3", "4", "6", "9"], "answer": 2, "why": "每个十位配 2 个个位：3×2=6"}, {"q": "4 个小朋友两两握手，一共握几次？", "options": ["4", "6", "5", "8"], "answer": 1, "why": "3+2+1=6"}, {"q": "家到学校 2 条路，学校到公园 3 条路，家→学校→公园共几种走法？", "options": ["6", "3", "5", "9"], "answer": 0, "why": "2×3=6"}], "mistake": "摆两位数时把 11、22 也算进去，或把 12 和 21 当成同一个。题目说「不重复」就不能用同一个数字两次。", "parent": ["你按什么顺序列的？会不会漏？", "12 和 21 算一种还是两种？", "能不能用乘法快速算出总数？"], "anim": ["小七：1、2、3 能摆出几个两位数？", "阿算：先定十位是 1，个位可以是 2 或 3：12、13。", "十位换成 2：21、23；换成 3：31、32。", "一共 6 个，一个都没漏。", "口诀：定住第一个，再换第二个。"], "scenes": [{"t": "0-2s", "pic": "衣架上挂着几件彩色上衣和裤子，机器人转圈", "line": "怎么配才不漏？"}, {"t": "2-4s", "pic": "一件上衣依次连向每条裤子，线一条条亮起", "line": "先定一件，配完再换。"}, {"t": "4-5s", "pic": "所有搭配排成方阵，小狐狸数数点头", "line": "有顺序就不会漏。"}], "standard": "能完整列出所有情况且不重复，5 题做对 4 题。"}, {"id": 15, "week": "第 15 周", "unit": "第四单元 逻辑与综合", "title": "重叠问题：两圈相交", "goal": "会用「加两次要减一次」处理重叠，会处理排队中的自己", "slogan": "重叠的那份，只能算一次", "story": "森林兴趣小组报名，喜欢画画的一圈、喜欢唱歌的一圈，中间有块地方两个圈都占了。小七数了两遍，阿算把重复的那块减掉。", "method": ["画两个相交的圈，重叠部分写「两样都参加的人数」。", "至少参加一样的人数 = 第一组 + 第二组 - 重叠人数。", "排队问题：从左数第几 + 从右数第几 - 1 = 总人数（自己被数了两次）。"], "examples": [{"q": "8 人喜欢画画，6 人喜欢唱歌，2 人两样都喜欢，至少喜欢一样的有几人？", "steps": ["8 + 6 = 14，两人都喜欢的 2 人被数了两次", "14 - 2 = 12 人"], "answer": "12 人"}, {"q": "排队时小明前面 4 人、后面 3 人，一共几人？", "steps": ["前面 4 人 + 后面 3 人 = 7 人", "别忘了小明自己：7 + 1 = 8 人"], "answer": "8 人"}, {"q": "两组各 5 人，重叠 3 人，总人数？", "steps": ["5 + 5 - 3 = 7 人"], "answer": "7 人"}], "exercises": [{"q": "7 人喜欢画画，5 人喜欢唱歌，3 人两样都喜欢，至少喜欢一样的有几人？", "options": ["9", "12", "15", "8"], "answer": 0, "why": "7+5-3=9"}, {"q": "小红前面 3 人，后面 4 人，这一队共几人？", "options": ["7", "8", "9", "10"], "answer": 1, "why": "3+4+1=8，别忘了自己"}, {"q": "数学组 10 人，语文组 8 人，4 人两组都参加，至少参加一组的有几人？", "options": ["12", "14", "18", "22"], "answer": 1, "why": "10+8-4=14"}, {"q": "从左数第 5，从右数第 4，这一排共几人？", "options": ["7", "8", "9", "10"], "answer": 1, "why": "5+4-1=8"}, {"q": "两组各 6 人，重叠 2 人，一共几人？", "options": ["8", "10", "12", "14"], "answer": 1, "why": "6+6-2=10"}], "mistake": "排队问题漏掉「自己」。可以把自己画成一颗特别的星星，前后的人分列两边，一眼看清。", "parent": ["谁被数了两次？", "画图时中间重叠的那块写几？", "排队题里，自己算进去了吗？"], "anim": ["小七：画画 8 人，唱歌 6 人，一共 14 人？", "阿算：有 2 人两样都喜欢，被数了两遍。", "画两个圈，中间相交的地方写 2。", "8 + 6 - 2 = 12 人。", "口诀：重叠的那份，只能算一次。"], "scenes": [{"t": "0-2s", "pic": "地上画着两个彩色圆圈，中间相交", "line": "中间这块算谁的？"}, {"t": "2-4s", "pic": "相交处的小动物举两次手，又放下一次", "line": "数了两遍，要减一次。"}, {"t": "4-5s", "pic": "两个圈合成一个，计数牌亮起", "line": "只算一次就对啦。"}], "standard": "能画圈并指出重叠部分，5 题做对 4 题。"}, {"id": 16, "week": "第 16 周", "unit": "第四单元 逻辑与综合", "title": "森林闯关：期末综合测评", "goal": "把四个单元的方法混在一起用，先判断题型再选方法", "slogan": "先看题型，再选方法，最后验算", "story": "数学森林的最后一道大门上有 5 道题，每道题来自不同关卡。阿算和小七要先认出它是哪一关，再拿出对应的本领。", "method": ["读题先问：这题在算数、找规律、数图形，还是应用题？", "认出题型后，回想那一讲的口诀。", "算完必须验算，尤其注意「加 1 减 1」和「重叠」。"], "examples": [{"q": "25 + 18 + 5 = ?", "steps": ["25 和 5 能凑整：25 + 5 = 30", "30 + 18 = 48"], "answer": "48"}, {"q": "1+2+3+…+9 = ?", "steps": ["首尾配对：(1+9)+(2+8)+(3+7)+(4+6) = 40", "加中间的 5：40 + 5 = 45"], "answer": "45"}, {"q": "把木头锯成 4 段，每锯 1 次 2 分钟，共几分钟？", "steps": ["4 段要锯 3 次", "3 × 2 = 6 分钟"], "answer": "6 分钟"}], "exercises": [{"q": "37 + 26 + 3 = ?", "options": ["56", "66", "65", "76"], "answer": 1, "why": "37+3=40，40+26=66"}, {"q": "2+4+6+8+10 = ?", "options": ["25", "30", "28", "32"], "answer": 1, "why": "(2+10)+(4+8)+6=30"}, {"q": "10 米路每 2 米种 1 棵，两端都种，共几棵？", "options": ["5", "6", "7", "10"], "answer": 1, "why": "10÷2=5 段，5+1=6 棵"}, {"q": "两数和 20，差 6，大数是？", "options": ["12", "13", "14", "16"], "answer": 1, "why": "(20+6)÷2=13"}, {"q": "9 + 99 = ?", "options": ["107", "108", "109", "118"], "answer": 1, "why": "99+1=100，100+8=108"}], "mistake": "不看题型就套最近学的方法。综合题第一步永远是判断「这是哪一类题」。", "parent": ["这题和第几讲有点像？", "你用了哪句口诀？", "验算的方法是什么？"], "anim": ["阿算：最后一关，五道题混在一起啦！", "小七：别急，先认题型，再选方法。", "凑整、配对、间隔、和差……一题一句口诀。", "算完还要验算，尤其是加 1 减 1 的地方。", "全部通关！你已经是数学森林的闯关王啦。"], "scenes": [{"t": "0-2s", "pic": "森林大门上有五道发光题目，两位角色站在门前", "line": "最后一关来啦。"}, {"t": "2-4s", "pic": "五张方法卡片依次飞到对应题目上", "line": "先认题型，再选方法。"}, {"t": "4-5s", "pic": "大门打开，彩带飘起，两个角色击掌", "line": "通关！"}], "standard": "5 题做对 4 题，且能说出每题用的是哪一讲的方法。"}]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('curriculum-data').textContent);
+const LESSONS = DATA.lessons, RULES = DATA.rules, SET = DATA.settings;
+const KEY = 'g2math_state_v1';
+let state = load();
+let cur = 1, animIdx = 0, timer = null, selections = {};
+
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.rec) return s; }catch(e){}
+  return {rec:{}, points:0, wrong:[], feedback:{}};
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function rec(id){ if(!state.rec[id]) state.rec[id] = {done:false,score:null,stars:0,anim:false,examples:false,date:''}; return state.rec[id]; }
+function today(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function buildNav(){
+  const units = [...new Set(LESSONS.map(l=>l.unit))];
+  let html = '';
+  units.forEach(u=>{
+    html += '<h2>'+u+'</h2>';
+    LESSONS.filter(l=>l.unit===u).forEach(l=>{
+      html += '<button class="lesson-btn'+(l.id===cur?' active':'')+'" onclick="openLesson('+l.id+')">'
+        +'第'+l.id+'讲 '+l.title+(rec(l.id).done?'<span class="tick">✓</span>':'')+'</button>';
+    });
+  });
+  document.getElementById('navList').innerHTML = html;
+  const names=['计算小能手','火眼金睛','解题侦探','坚持之星'];
+  document.getElementById('badges').innerHTML = units.map((u,i)=>{
+    const ids=LESSONS.filter(l=>l.unit===u).map(l=>l.id);
+    const ok=ids.every(id=>rec(id).done);
+    return '<div>'+(ok?'🏅 ':'🔒 ')+names[i]+'：'+(ok?'已解锁（'+ids.length+' 讲全部达标）':'待解锁 '+ids.filter(id=>!rec(id).done).length+' 讲')+'</div>';
+  }).join('');
+}
+function refreshStats(){
+  const done = LESSONS.filter(l=>rec(l.id).done).length;
+  document.getElementById('sDone').textContent = done;
+  document.getElementById('sPct').textContent = Math.round(done/LESSONS.length*100)+'%';
+  document.getElementById('barFill').style.width = (done/LESSONS.length*100)+'%';
+  document.getElementById('sPoints').textContent = state.points;
+  document.getElementById('sWrong').textContent = state.wrong.filter(w=>!w.fixed).length;
+}
+function openLesson(id){
+  stopAnim(); cur=id; animIdx=0; selections={};
+  buildNav(); refreshStats(); render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const FOX = `<g class="char" transform="translate(66,96)">
+  <ellipse cx="34" cy="86" rx="34" ry="8" fill="#dbe9d5" opacity=".7"/>
+  <path d="M8 72 Q-18 58 -8 38 Q8 46 18 62 Z" fill="#ff9a4d" stroke="#e2762c" stroke-width="2"/>
+  <path d="M12 70 Q-6 58 0 44" stroke="#fff0d6" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <polygon points="12,26 22,2 36,22" fill="#ff9a4d" stroke="#e2762c" stroke-width="2"/>
+  <polygon points="48,22 62,2 66,28" fill="#ff9a4d" stroke="#e2762c" stroke-width="2"/>
+  <circle cx="39" cy="42" r="30" fill="#ffb066" stroke="#e2762c" stroke-width="2"/>
+  <path d="M16 48 Q39 76 62 48 Q52 66 39 66 Q26 66 16 48Z" fill="#fff4e4"/>
+  <circle cx="29" cy="38" r="3.6" fill="#3b2a20"/><circle cx="50" cy="38" r="3.6" fill="#3b2a20"/>
+  <ellipse cx="39" cy="52" rx="5" ry="3.6" fill="#3b2a20"/>
+  <circle cx="21" cy="48" r="4" fill="#ff8d8d" opacity=".55"/><circle cx="57" cy="48" r="4" fill="#ff8d8d" opacity=".55"/>
+  <rect x="14" y="68" width="50" height="20" rx="9" fill="#5b8def"/>
+  <circle cx="39" cy="78" r="6" fill="#ffd76a"/>
+</g>`;
+const ROBOT = `<g class="char" transform="translate(510,98)">
+  <ellipse cx="42" cy="86" rx="34" ry="8" fill="#dbe9d5" opacity=".7"/>
+  <line x1="42" y1="6" x2="42" y2="20" stroke="#7a8ba5" stroke-width="3"/>
+  <circle cx="42" cy="5" r="5" fill="#ff7a59"/>
+  <rect x="10" y="20" width="64" height="48" rx="12" fill="#9fd8ff" stroke="#4a90d9" stroke-width="2"/>
+  <rect x="20" y="32" width="42" height="22" rx="7" fill="#f7fdff"/>
+  <circle cx="33" cy="43" r="4" fill="#2b4a6b"/><circle cx="51" cy="43" r="4" fill="#2b4a6b"/>
+  <path d="M32 56 Q42 62 52 56" stroke="#2b4a6b" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <rect x="18" y="70" width="48" height="20" rx="6" fill="#7fb2e8" stroke="#4a90d9" stroke-width="2"/>
+  <rect x="2" y="72" width="12" height="16" rx="5" fill="#7fb2e8"/><rect x="70" y="72" width="12" height="16" rx="5" fill="#7fb2e8"/>
+</g>`;
+
+function stageSVG(){
+  return `<svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+    <rect width="680" height="220" fill="none"/>
+    <path d="M0 176 Q90 150 180 176 T360 176 T540 176 T680 176 L680 220 L0 220Z" fill="#dff0d8"/>
+    <circle cx="120" cy="34" r="16" fill="#fff" opacity=".75"/><circle cx="140" cy="30" r="20" fill="#fff" opacity=".75"/>
+    <circle cx="580" cy="26" r="14" fill="#fff" opacity=".7"/>
+    <path d="M250 176 l0 -54 M250 122 l-26 -18 M250 138 l28 -20" stroke="#8fb37a" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="250" cy="110" r="26" fill="#9ed48a"/><circle cx="226" cy="124" r="17" fill="#8cc879"/>
+    <path d="M430 176 l0 -46" stroke="#a08263" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="430" cy="112" r="24" fill="#7fc26a"/><circle cx="410" cy="126" r="15" fill="#6fb35c"/>
+    ${FOX}${ROBOT}
+    <g fill="#f6c86a"><circle cx="330" cy="168" r="5"/><circle cx="352" cy="172" r="4"/><circle cx="310" cy="174" r="3"/></g>
+  </svg>`;
+}
+
+function render(){
+  const L = LESSONS.find(x=>x.id===cur);
+  const r = rec(cur);
+  const unitIdx = [...new Set(LESSONS.map(x=>x.unit))].indexOf(L.unit)+1;
+  let h = '';
+  h += '<div class="crumb">'+L.unit+' ｜ '+L.week+' ｜ 达标：'+L.standard+'</div>';
+  h += '<h2>第 '+L.id+' 讲 · '+L.title+'</h2>';
+  h += '<div class="slogan">口诀：'+L.slogan+'</div>';
+  h += '<div class="goal"><b>本周目标：</b>'+L.goal+'</div>';
+
+  h += '<h3>① 卡通动画课堂</h3>';
+  h += '<div class="stage">'+stageSVG()
+     + '<div class="bubble" id="bubble">点「播放」开始，'+SET.hero+'和'+SET.partner+'一块儿讲给你听。</div>'
+     + '<div class="board" id="board">'+L.slogan+'</div>'
+     + '<div class="ctrl">'
+     + '<button class="primary" id="playBtn" onclick="toggleAnim()">▶ 播放</button>'
+     + '<button onclick="prevStep()">上一句</button><button onclick="nextStep()">下一句</button>'
+     + '<button onclick="replayAnim()">重播</button>'
+     + '<span class="stepinfo" id="stepInfo">第 0 / '+L.anim.length+' 句</span>'
+     + '</div></div>';
+  h += '<div class="video-box"><b style="font-size:13px">🎬 单元卡通短片（MP4）</b>'
+     + '<div style="margin:8px 0"><video id="lessonVideo" controls preload="metadata" src="../videos/unit'+unitIdx+'-opening.mp4" onerror="videoFallback()"></video></div>'
+     + '<div class="vfallback" id="vfallback">本单元 MP4 未放在 videos/ 目录，或当前环境不支持播放；不影响学习，上面的动画课堂已包含完整逐句讲解。</div>'
+     + '<div class="notice">视频画面不含算式，知识点以动画课堂与教案为准。</div></div>';
+
+  h += '<h3>② 情境故事</h3><div class="story">'+L.story+'</div>';
+  h += '<h3>③ 方法步骤</h3><ol class="method">'+L.method.map(m=>'<li>'+m+'</li>').join('')+'</ol>';
+
+  h += '<h3>④ 例题（先自己想，再点开看思路）</h3>';
+  L.examples.forEach((e,i)=>{
+    h += '<details><summary>例 '+(i+1)+'　'+e.q+'</summary><div class="body">'
+      + e.steps.map(s=>'<div>· '+s+'</div>').join('')
+      + '<div style="margin-top:6px"><em>答：'+e.answer+'</em></div></div></details>';
+  });
+  h += '<button onclick="markExamples()">'+ (r.examples?'✓ 已看懂例题':'看懂例题 +2 分') +'</button>';
+
+  h += '<h3>⑤ 课堂练习（5 题，点选后提交）</h3>';
+  L.exercises.forEach((e,i)=>{
+    h += '<div class="q" id="q'+i+'"><div class="qt">'+(i+1)+'. '+e.q+'</div><div class="opts">'
+      + e.options.map((o,j)=>'<button class="opt" id="o'+i+'_'+j+'" onclick="pick('+i+','+j+')">'+String.fromCharCode(65+j)+'. '+o+'</button>').join('')
+      + '</div><div class="res" id="res'+i+'"></div></div>';
+  });
+  h += '<div class="submitrow"><button class="primary" onclick="submitQuiz()">提交并判分</button>'
+     + '<span class="score" id="scoreText">'+(r.score!==null?'上次得分：'+r.score+' / 5':'')+'</span></div>';
+
+  h += '<div class="checkin"><h3 style="margin:0 0 8px;border:none;padding:0">⑥ 自评、打卡与家长反馈</h3>'
+     + '<div>今天的课：<span class="stars" id="stars">'
+     + [1,2,3].map(n=>'<span class="'+(r.stars>=n?'on':'')+'" onclick="setStars('+n+')">★</span>').join('')
+     + '</span> <span style="font-size:12px;color:var(--muted)">1=没听懂　2=有点难　3=我懂了</span></div>'
+     + '<div style="margin:10px 0"><button class="primary" onclick="checkIn()">'+(r.done?'✓ 已达标（点此更新记录）':'完成打卡')+'</button>'
+     + ' <span style="font-size:12px;color:var(--muted)">'+RULES.pass+'</span></div>'
+     + '<div style="font-size:13px;font-weight:700;margin:12px 0 6px">家长本周反馈</div>'
+     + '<textarea id="fb" placeholder="卡在哪一题？最有成就感的是哪一题？下周怎么调整？">'+esc(state.feedback[cur]||'')+'</textarea>'
+     + '<div style="margin-top:8px"><button onclick="saveFeedback()">保存反馈 +5 分</button><span class="saved" id="fbSaved"></span></div>'
+     + '</div>';
+
+  h += '<h3>⑦ 易错提醒</h3><div class="story" style="background:#fff8f2">'+L.mistake+'</div>';
+  h += '<h3>⑧ 家长提问（只问，不代算）</h3><ol class="method">'+L.parent.map(p=>'<li>'+p+'</li>').join('')+'</ol>';
+  h += '<h3>⑨ 错题本</h3><div class="wronglist" id="wrongList"></div>';
+  h += '<div style="margin-top:22px;display:flex;gap:10px">'
+     + '<button onclick="openLesson(Math.max(1,cur-1))">← 上一讲</button>'
+     + '<button onclick="openLesson(Math.min(LESSONS.length,cur+1))">下一讲 →</button></div>';
+  document.getElementById('detail').innerHTML = h;
+  renderWrong();
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function videoFallback(){ const v=document.getElementById('lessonVideo'); if(v) v.style.display='none';
+  const f=document.getElementById('vfallback'); if(f) f.style.display='block'; }
+
+function showStep(){
+  const L=LESSONS.find(x=>x.id===cur);
+  if(animIdx<0) animIdx=0; if(animIdx>=L.anim.length) animIdx=L.anim.length-1;
+  document.getElementById('bubble').textContent = L.anim[animIdx];
+  document.getElementById('stepInfo').textContent = '第 '+(animIdx+1)+' / '+L.anim.length+' 句';
+  document.getElementById('board').textContent = L.slogan;
+}
+function toggleAnim(){ if(timer) stopAnim(); else startAnim(); }
+function startAnim(){
+  const L=LESSONS.find(x=>x.id===cur);
+  if(animIdx>=L.anim.length-1) animIdx=0;
+  document.getElementById('playBtn').textContent='⏸ 暂停';
+  showStep();
+  timer=setInterval(()=>{
+    if(animIdx>=L.anim.length-1){ stopAnim(); grantAnim(); return; }
+    animIdx++; showStep();
+  },3200);
+}
+function stopAnim(){ if(timer){clearInterval(timer);timer=null;}
+  const b=document.getElementById('playBtn'); if(b) b.textContent='▶ 播放'; }
+function nextStep(){ stopAnim(); const L=LESSONS.find(x=>x.id===cur);
+  if(animIdx<L.anim.length-1) animIdx++; showStep(); if(animIdx===L.anim.length-1) grantAnim(); }
+function prevStep(){ stopAnim(); if(animIdx>0) animIdx--; showStep(); }
+function replayAnim(){ stopAnim(); animIdx=0; showStep(); startAnim(); }
+function grantAnim(){ const r=rec(cur); if(!r.anim){ r.anim=true; state.points+=2; save(); refreshStats(); } }
+function markExamples(){ const r=rec(cur); if(r.examples) return;
+  r.examples=true; state.points+=2; save(); render(); refreshStats(); }
+
+function pick(i,j){
+  selections[i]=j;
+  const L=LESSONS.find(x=>x.id===cur);
+  L.exercises[i].options.forEach((_,k)=>{
+    const el=document.getElementById('o'+i+'_'+k); if(el) el.className='opt'+(k===j?' sel':'');
+  });
+}
+function submitQuiz(){
+  const L=LESSONS.find(x=>x.id===cur);
+  if(Object.keys(selections).length<L.exercises.length){ alert('还有题目没选，做完 5 题再提交。'); return; }
+  let right=0;
+  L.exercises.forEach((e,i)=>{
+    const ok = selections[i]===e.answer;
+    if(ok) right++;
+    e.options.forEach((_,k)=>{
+      const el=document.getElementById('o'+i+'_'+k); if(!el) return;
+      el.className='opt'+(k===e.answer?' right':(k===selections[i]?' wrong':''));
+    });
+    const res=document.getElementById('res'+i);
+    res.className='res '+(ok?'ok':'no');
+    res.innerHTML=(ok?'✓ 答对了　':'✗ 正确答案是 '+String.fromCharCode(65+e.answer)+'. '+e.options[e.answer]+'　')+esc(e.why);
+    if(!ok){
+      const key=cur+'-'+i;
+      if(!state.wrong.some(w=>w.key===key)) state.wrong.push({key:key,lesson:cur,q:e.q,right:e.options[e.answer],fixed:false});
+    }else{
+      const key=cur+'-'+i;
+      state.wrong.filter(w=>w.key===key).forEach(w=>w.fixed=true);
+    }
+  });
+  const r=rec(cur);
+  if(r.score===null){ state.points += right*2; }
+  r.score=right;
+  const pass = right>=4;
+  if(pass && !r.done){} // 打卡仍由孩子/家长确认
+  save(); refreshStats(); renderWrong();
+  document.getElementById('scoreText').textContent='本次得分：'+right+' / 5';
+  let msg = right>=4 ? '达标！可以打卡啦。' : (right===3 ? '订正错题，隔一天再做一遍。' : '先重看动画课堂和例题，本讲顺延一周。');
+  setTimeout(()=>alert('做对 '+right+' 题。'+msg),120);
+}
+function renderWrong(){
+  const list=state.wrong.filter(w=>w.lesson===cur);
+  const el=document.getElementById('wrongList'); if(!el) return;
+  if(!list.length){ el.innerHTML='<span style="color:var(--muted)">本讲还没有错题。</span>'; return; }
+  el.innerHTML=list.map(w=>'<div class="wrongitem'+(w.fixed?' done':'')+'">'
+    +'<span class="tag">第 '+w.lesson+' 讲</span>'+esc(w.q)+'　正确答案：'+esc(w.right)
+    +(w.fixed?'　✓ 已订正':'　<button style="padding:2px 9px;font-size:12px" onclick="fixWrong(\''+w.key+'\')">标记已订正</button>')
+    +'</div>').join('');
+}
+function fixWrong(key){ const w=state.wrong.find(x=>x.key===key); if(w){w.fixed=true;save();renderWrong();refreshStats();} }
+function setStars(n){ const r=rec(cur);
+  if(r.stars<3 && n===3) state.points+=3;
+  r.stars=n; save(); render(); }
+function checkIn(){
+  const r=rec(cur);
+  if(r.score===null){ alert('先完成 5 道练习再打卡。'); return; }
+  const pass=r.score>=4;
+  r.done=pass; r.date=today(); save();
+  buildNav(); refreshStats(); render();
+  alert(pass?'第 '+cur+' 讲已达标 ✓':'得分 '+r.score+' 分，记为「需复学」：订正错题或重看讲解后再打卡。');
+}
+function saveFeedback(){
+  const t=document.getElementById('fb').value.trim();
+  const had=!!state.feedback[cur];
+  state.feedback[cur]=t;
+  if(t && !had) state.points+=5;
+  save(); refreshStats();
+  document.getElementById('fbSaved').textContent='已保存 '+today();
+}
+
+function showReport(){
+  const done=LESSONS.filter(l=>rec(l.id).done).length;
+  const lines=['二年级奥数 · 学习周报（生成日期 '+today()+'）','',
+    '总进度：'+done+' / '+LESSONS.length+' 讲达标；积分 '+state.points+'；待订正错题 '+state.wrong.filter(w=>!w.fixed).length+' 道','',
+    '—— 逐讲记录 ——'];
+  LESSONS.forEach(l=>{
+    const r=rec(l.id);
+    lines.push(l.week+' 第'+l.id+'讲 '+l.title+'：'+(r.score===null?'未做':'得分 '+r.score+'/5')
+      +'；'+(r.done?'已达标':'未达标')+'；自评 '+r.stars+' 星'+(r.date?'；打卡 '+r.date:''));
+  });
+  lines.push('','—— 家长反馈 ——');
+  LESSONS.forEach(l=>{ if(state.feedback[l.id]) lines.push('第'+l.id+'讲：'+state.feedback[l.id]); });
+  if(!Object.values(state.feedback).some(x=>x)) lines.push('（尚未填写）');
+  lines.push('','—— 待订正错题 ——');
+  const ws=state.wrong.filter(w=>!w.fixed);
+  if(ws.length) ws.forEach(w=>lines.push('第'+w.lesson+'讲：'+w.q+'　正确答案 '+w.right));
+  else lines.push('（无）');
+  lines.push('','—— 下周建议 ——');
+  const need=LESSONS.filter(l=>!rec(l.id).done);
+  const bad=LESSONS.filter(l=>rec(l.id).score!==null && rec(l.id).score<=2);
+  if(bad.length) lines.push('有 '+bad.length+' 讲需复学：第 '+bad.map(l=>l.id).join('、')+' 讲；暂不推进新讲。');
+  else if(need.length) lines.push('继续第 '+need[0].id+' 讲《'+need[0].title+'》；家长反馈里「卡住的题」先在开课前 5 分钟重讲。');
+  else lines.push('16 讲全部达标，可做变式练习（把例题数字换掉重做）。');
+  document.getElementById('reportText').value=lines.join('\n');
+  document.getElementById('reportModal').style.display='block';
+}
+function copyReport(){ const t=document.getElementById('reportText'); t.select();
+  try{document.execCommand('copy');alert('已复制，可直接粘贴到周反馈 Issue 或微信。');}catch(e){alert('请手动选中文本复制。');} }
+function exportState(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='grade2-math-progress-'+today()+'.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+function importState(input){
+  const f=input.files[0]; if(!f) return;
+  const reader=new FileReader();
+  reader.onload=e=>{ try{ const s=JSON.parse(e.target.result);
+      if(!s.rec) throw new Error('格式不对'); state=s; save(); buildNav(); refreshStats(); render(); alert('进度已导入。');
+    }catch(err){ alert('导入失败：'+err.message); } };
+  reader.readAsText(f); input.value='';
+}
+
+buildNav(); refreshStats(); render();
+</script>
+</body>
+</html>
