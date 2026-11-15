@@ -302,11 +302,14 @@ function render(){
      + '<button onclick="openLesson(Math.min(LESSONS.length,cur+1))">下一讲 →</button></div>';
   document.getElementById('detail').innerHTML = h;
   renderWrong();
+  if(location.hostname.indexOf('github.io')>-1){
+    videoFallback('在线版暂不含 MP4 短片；上面的动画课堂已包含本讲完整逐句讲解，直接点「播放」即可。');
+  }
 }
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function videoFallback(){ const v=document.getElementById('lessonVideo'); if(v) v.style.display='none';
-  const f=document.getElementById('vfallback'); if(f) f.style.display='block'; }
+function videoFallback(msg){ const v=document.getElementById('lessonVideo'); if(v) v.style.display='none';
+  const f=document.getElementById('vfallback'); if(f){ if(msg) f.textContent=msg; f.style.display='block'; } }
 
 function showStep(){
   const L=LESSONS.find(x=>x.id===cur);
