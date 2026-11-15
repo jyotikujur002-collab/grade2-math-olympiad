@@ -19,6 +19,8 @@
 
 **最快开始**：双击打开 `site/index.html`（无需联网、无需安装）。进度保存在浏览器本地，可导出 JSON 备份。
 
+**在线版**：https://jyotikujur002-collab.github.io/grade2-math-olympiad/ （GitHub Pages，免登录，手机/平板可开）。仓库：https://github.com/jyotikujur002-collab/grade2-math-olympiad （公开）。在线版与本地版的进度各自存在本机浏览器，不互通；换设备用网页里的「导出进度 / 导入进度」。
+
 ## 2. 16 周学习计划（详细）
 
 | 周次 | 讲次 | 主题 | 单元 | 本周目标 | 达标标准 | 教案 |

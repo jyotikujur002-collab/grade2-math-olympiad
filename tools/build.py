@@ -143,6 +143,8 @@ r("| `tools/` | 课程数据与生成脚本 |")
 r("")
 r("**最快开始**：双击打开 `site/index.html`（无需联网、无需安装）。进度保存在浏览器本地，可导出 JSON 备份。")
 r("")
+r("**在线版**：https://jyotikujur002-collab.github.io/grade2-math-olympiad/ （GitHub Pages，免登录，手机/平板可开）。仓库：https://github.com/jyotikujur002-collab/grade2-math-olympiad （公开）。在线版与本地版的进度各自存在本机浏览器，不互通；换设备用网页里的「导出进度 / 导入进度」。")
+r("")
 r("## 2. 16 周学习计划（详细）")
 r("")
 r("| 周次 | 讲次 | 主题 | 单元 | 本周目标 | 达标标准 | 教案 |")
@@ -820,4 +822,25 @@ buildNav(); refreshStats(); render();
 payload = json.dumps({"settings": SETTINGS, "rules": RULES, "lessons": CURRICULUM},
                      ensure_ascii=False).replace("</", "<\\/")
 w("site/index.html", HTML.replace("__CURRICULUM_JSON__", payload))
+
+# Pages 站点根：自动跳转到学习中心，便于使用短链接
+w("index.html", """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=site/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二年级奥数 · 数学森林闯关</title>
+<style>body{margin:0;padding:64px 20px;text-align:center;background:#f5f8fc;color:#20304a;
+font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.8}
+h1{font-size:22px;margin:0 0 10px}a{color:#ff7a59;font-weight:700}</style>
+</head>
+<body>
+<h1>二年级奥数 · 数学森林闯关</h1>
+<p>正在进入学习中心……</p>
+<p><a href="site/">如果没有自动跳转，点这里进入</a></p>
+</body>
+</html>
+""")
+
 print("done. lessons=%d" % len(CURRICULUM))
